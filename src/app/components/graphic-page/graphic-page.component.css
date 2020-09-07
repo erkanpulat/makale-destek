@@ -1,0 +1,11 @@
+@media (max-width: 991px) {
+  ul .nav-item {
+    margin: 15px 0px !important;
+  }
+}
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Dosya Seç";
+  background-color: #6c757d;
+  color: white;
+}

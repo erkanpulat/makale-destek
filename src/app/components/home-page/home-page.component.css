@@ -1,0 +1,20 @@
+@media (max-width: 991px) {
+  ul .nav-item {
+    margin: 15px 0px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    margin-top: -50px;
+  }
+
+  .bottomjumboimg {
+    margin: 15px 0px;
+  }
+}
+
+.topjumbo {
+  margin-top: -35px;
+  margin-bottom: 0px;
+}

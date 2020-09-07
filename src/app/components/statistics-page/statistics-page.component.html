@@ -1,0 +1,132 @@
+<body class="bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" routerLink=""><i class="fa fa-diamond mr-1"></i>Destek</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#destekmenuac">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="destekmenuac">
+                <ul class="navbar-nav ml-auto mr-auto">
+                    <li class="nav-item mr-5">
+                        <a routerLink="/ceviri" class="nav-link"><i class="fa fa-globe mr-1"></i>Çeviri
+                            Destek</a>
+                    </li>
+                    <li class="nav-item ml-5 mr-5">
+                        <a routerLink="/istatistik" class="nav-link active"><i class="fa fa-bar-chart mr-1"></i>İstatistik
+                            Destek</a>
+                    </li>
+                    <li class="nav-item ml-5">
+                        <a routerLink="/grafik" class="nav-link"><i class="fa fa-object-ungroup mr-1"></i>Grafik
+                            Destek</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="jumbotron col-md-12 bg-secondary rounded-0 text-light">
+                <h1 class="display-4 text-center" style="margin-top: -30px;">İstatistik Sipariş Sayfası</h1>
+                <p class="lead mt-4 mb-4 text-center">
+                    İstatistik siparişinizi oluşturun. Ekibimiz en kısa sürede sizinle iletişime geçsin!
+                </p>
+                <div class="card mb-4 col-md-11 mr-auto ml-auto text-dark text-center bg-light">
+                    <div class="my-4">
+                        <i class="fa fa-pie-chart fa-5x text-secondary"></i>
+                    </div>
+                    <div class="mb-4 mt-2 mx-4">
+                        <div *ngIf="isHiddenSaveOrderForm">
+                            <div class="col-md-11 mr-auto ml-auto mb-4 text-left">
+                                <div *ngIf="fileUploadMessage" class="alert alert-info my-4 text-center">
+                                    {{fileUploadMessage}}</div>
+                                <div *ngIf="currentFile" class="progress my-2">
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                        role="progressbar" attr.aria-valuenow="{{ fileProgress }}" aria-valuemin="0"
+                                        aria-valuemax="100" [ngStyle]="{ width: fileProgress + '%' }">
+                                        %{{ fileProgress }}
+                                    </div>
+                                </div>
+                                <form [formGroup]="orderFormGroup" (ngSubmit)="submit()">
+                                    <div class="form-row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="file">Dosya</label>
+                                            <div class="custom-file">
+                                                <input id="file" type="file" class="custom-file-input"
+                                                    (change)="selectFile($event)"
+                                                    accept="image/x-png,image/jpeg,.doc, .docx,.txt,.pdf">
+                                                <label class="custom-file-label" for="file">Dosya Seçiniz</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="customerNameSurname">Ad Soyad</label>
+                                            <input type="text" class="form-control" id="customerNameSurname"
+                                                placeholder="Ad Soyad Giriniz" formControlName="customerNameSurname"
+                                                [class.is-invalid]="orderFormGroup.get('customerNameSurname').invalid && orderFormGroup.get('customerNameSurname').touched"
+                                                maxlength="50">
+                                            <div
+                                                *ngIf="(customerNameSurname.invalid && customerNameSurname.touched) || customerNameSurname.dirty">
+                                                <small *ngIf="customerNameSurname.errors?.required"
+                                                    class="text-danger">İsim girilmesi zorunludur!</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="customerPhoneNumber">Telefon Numarası</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-white border-right-0"
+                                                        id="basic-addon1">+90</span>
+                                                </div>
+                                                <input type="tel" class="form-control" id="customerPhoneNumber"
+                                                    placeholder="Telefon Numarası Giriniz"
+                                                    formControlName="customerPhoneNumber"
+                                                    [class.is-invalid]="orderFormGroup.get('customerPhoneNumber').invalid && orderFormGroup.get('customerPhoneNumber').touched"
+                                                    maxlength="10" pattern="[0-9]{10}">
+                                            </div>
+                                            <div
+                                                *ngIf="(customerPhoneNumber.invalid && customerPhoneNumber.touched) || customerPhoneNumber.dirty">
+                                                <small *ngIf="customerPhoneNumber.errors?.required"
+                                                    class="text-danger">Telefon
+                                                    numarası girilmesi zorunludur!</small>
+                                                <small *ngIf="customerPhoneNumber.errors?.pattern"
+                                                    class="text-danger">Lütfen
+                                                    geçerli bir telefon numarası giriniz!</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="customerEmail">Email</label>
+                                            <input type="email" class="form-control" id="customerEmail"
+                                                placeholder="Email Adresinizi Giriniz" formControlName="customerEmail"
+                                                [class.is-invalid]="orderFormGroup.get('customerEmail').invalid && orderFormGroup.get('customerEmail').touched">
+                                            <div
+                                                *ngIf="(customerEmail.invalid && customerEmail.touched) || customerEmail.dirty">
+                                                <small *ngIf="customerEmail.errors?.required" class="text-danger">Email
+                                                    adresi girilmesi zorunludur!</small>
+                                                <small *ngIf="customerEmail.errors?.pattern" class="text-danger">Lütfen
+                                                    geçerli bir email adresi giriniz!</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button type="submit" class="btn btn-block btn-secondary text-white"
+                                            [disabled]="!orderFormGroup.valid">Sipariş
+                                            Oluştur</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div *ngIf="!isHiddenSaveOrderForm" class="bg-success text-white p-5 my-3 text-center rounded">
+                            <p class="lead font-weight-normal">Siparişiniz başarıyla oluşturuldu!<br><br>
+                                Ekibimiz en kısa süre içinde vermiş olduğunuz iletişim
+                                kanalları üzerinden sizinle iletişime geçecektir.<br><br>
+                                <a routerLink="" style="text-decoration: none;" class="text-white font-weight-bold">Ana
+                                    sayfaya dön</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer bg-secondary ">
+        <div class="footer-copyright text-light text-center py-3">© 2020 Copyright: Erkan Pulat</div>
+    </footer>
+</body>
